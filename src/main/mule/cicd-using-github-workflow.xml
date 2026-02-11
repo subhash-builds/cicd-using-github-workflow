@@ -17,7 +17,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 output application/json
 ---
 {
-	"Message": "Hello Welcome to India" ++ attributes.queryParams
+	"Message": "Hello, Welcome to India" ++ attributes.queryParams.name
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
