@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="51605e1a-8a62-470f-b92d-424aca54e1a1" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="cicd-using-github-workflowFlow" doc:id="2ffe36a4-afe6-471a-a7af-4176575e70e1" >
+		<http:listener doc:name="Listener" doc:id="34a3d586-0293-40c9-9523-65296ef7a70f" config-ref="HTTP_Listener_config" path="/git-cicd"/>
+		<logger level="INFO" doc:name="log-start of the flow" doc:id="604cb392-4592-46d0-9a6e-c5a6314d7674" message='#["start of the flow" ++ flow.name]'/>
+		<ee:transform doc:name="Transform Message" doc:id="26e191a8-e267-4aa7-8adb-28f2757d5d3a" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"Message": "Hello Welcome to India" ++ attributes.queryParams
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="log-start of the flow1" doc:id="7f2ffcf7-806b-4beb-ba6c-d923bf50d9a7" message='#["end of the flow" ++ flow.name]' />
+	</flow>
+</mule>
